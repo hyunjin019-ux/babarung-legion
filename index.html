@@ -15,7 +15,7 @@ dialog{background:#131c29;color:var(--text);border:1px solid #40516a;border-radi
 <header class="hero"><div class="brand"><div class="crest">巴</div><div><div class="eyebrow">AION 2 · LEGION COMMAND</div><h1>바바룽 서버 PvE 레기온</h1><div class="muted">함께 공략하고, 함께 성장한다.</div></div></div><div class="hero-actions"><button id="exportBtn">데이터 백업</button><button id="importBtn">백업 불러오기</button><input id="importFile" type="file" accept=".json,application/json" class="hidden"></div></header>
 <nav class="tabs"><button class="tab active" data-tab="overview">레기온 현황</button><button class="tab" data-tab="members">레기온원 관리</button><button class="tab" data-tab="party">포스 구성</button><button class="tab" data-tab="events">PvE 일정·참여</button><button class="tab" data-tab="stats">통계</button></nav>
 <section id="overview" class="page"><div class="stats" id="statCards"></div><div class="grid2"><div class="panel"><div class="panel-head"><h2>최근 PvE 일정</h2><button onclick="showTab('events')">일정 관리 →</button></div><div id="overviewEvents"></div></div><div class="panel"><div class="panel-head"><h2>레기온원 미리보기</h2><button onclick="showTab('members')">전체 보기 →</button></div><div id="overviewMembers"></div></div></div><div class="note">첫 실행용 프로토타입입니다. 입력한 정보는 현재 브라우저에 저장됩니다. 실제 여러 사용자 공유·로그인은 아직 연결되지 않았습니다.</div></section>
-<section id="members" class="page hidden"><div class="panel"><div class="panel-head"><h2>레기온원 관리</h2><button class="primary" id="addMember">＋ 레기온원 등록</button></div><div class="tools" style="margin-bottom:12px"><input id="memberSearch" class="field search" placeholder="캐릭터명 또는 직업 검색"><select id="memberSort" class="field"><option value="name">이름순</option><option value="power">전투력 높은 순</option><option value="class">직업순</option><option value="rank">계급순</option></select><select id="classFilter" class="field"><option value="">모든 직업</option></select></div><div class="table-wrap"><table><thead><tr><th>캐릭터</th><th>직업</th><th>전투력</th><th>계급</th><th>메모</th><th>관리</th></tr></thead><tbody id="memberRows"></tbody></table></div></div></section>
+<section id="members" class="page hidden"><div class="panel"><div class="panel-head"><h2>레기온원 자동 연동</h2><span class="pill gold">서버: 바바룽</span></div><p class="muted">참고 사이트에서 레기온원 이름을 복사해 아래에 붙여넣고 연동하세요. 한 줄에 한 명씩 입력하면 게임 캐릭터 검색 API에서 직업·전투력·레벨을 조회합니다.</p><textarea id="rosterNames" class="field" style="width:100%;min-height:110px" placeholder="예시:&#10;캐릭터이름1&#10;캐릭터이름2&#10;캐릭터이름3"></textarea><div class="tools" style="margin-top:10px"><button id="syncRoster" class="primary">명단 연동 / 정보 갱신</button><span id="syncStatus" class="small">이름 목록을 붙여넣어 시작하세요. 기존 캐릭터는 중복 등록하지 않고 정보를 갱신합니다.</span></div><p class="small">주의: 참고 사이트의 전체 명단을 자동으로 직접 가져오는 기능은 아직 아닙니다. 해당 사이트의 공개 연동 주소를 확인하지 못해 이름 목록을 한 번 복사해야 합니다. 게임 API가 응답하지 않거나 동명이인일 경우 일부 캐릭터는 건너뛸 수 있습니다.</p></div><div class="panel"><div class="panel-head"><h2>레기온원 관리</h2><button class="primary" id="addMember">＋ 레기온원 등록</button></div><div class="tools" style="margin-bottom:12px"><input id="memberSearch" class="field search" placeholder="캐릭터명 또는 직업 검색"><select id="memberSort" class="field"><option value="name">이름순</option><option value="power">전투력 높은 순</option><option value="class">직업순</option><option value="rank">계급순</option></select><select id="classFilter" class="field"><option value="">모든 직업</option></select></div><div class="table-wrap"><table><thead><tr><th>캐릭터</th><th>직업</th><th>전투력</th><th>계급</th><th>메모</th><th>관리</th></tr></thead><tbody id="memberRows"></tbody></table></div></div></section>
 <section id="party" class="page hidden"><div class="grid2"><div class="panel"><div class="panel-head"><h2>포스 구성</h2><button id="clearParty">구성 초기화</button></div><div class="tools" style="margin-bottom:12px"><label class="small">파티 수 <select id="partyCount" class="field"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label><button id="autoParty" class="primary">자동 배치</button></div><div class="party-grid" id="partyGrid"></div><p class="small">오른쪽 목록에서 배치 버튼을 눌러 파티에 넣을 수 있습니다. 파티는 6명 기준으로 구성됩니다.</p></div><div class="panel"><div class="panel-head"><h2>배치할 레기온원</h2></div><input id="partySearch" class="field search" placeholder="캐릭터 검색"><div id="partyMemberList"></div></div></div></section>
 <section id="events" class="page hidden"><div class="panel"><div class="panel-head"><h2>PvE 일정 및 참여 기록</h2><button class="primary" id="addEvent">＋ 일정 추가</button></div><div id="eventList"></div></div></section>
 <section id="stats" class="page hidden"><div class="stats" id="statsCards"></div><div class="grid2"><div class="panel"><h2>직업별 인원</h2><div id="classStats"></div></div><div class="panel"><h2>전투력 분포</h2><div id="powerStats"></div></div></div></section>
@@ -77,5 +77,39 @@ function renderStats(){const ms=data.members,total=ms.length,avg=total?Math.roun
 document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='babarung-legion-backup.json';a.click();URL.revokeObjectURL(url)};
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
 document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const v=JSON.parse(await f.text());if(!Array.isArray(v.members)||!Array.isArray(v.events))throw Error();if(confirm('현재 데이터를 백업 파일 내용으로 바꿀까요?')){data={members:v.members,events:v.events,parties:v.parties||{}};save();alert('백업을 불러왔습니다.')}}catch{alert('올바른 백업 JSON 파일이 아닙니다.')}e.target.value=''};
+
+// 바바룽 레기온 명단 연동: 참고 사이트에서 복사한 이름을 공식 웹 캐릭터 검색 API로 조회합니다.
+document.getElementById('syncRoster').addEventListener('click', async () => {
+  const names = [...new Set(document.getElementById('rosterNames').value.split(/[\n,，、;；\t]+/).map(x=>x.trim()).filter(Boolean))];
+  const status = document.getElementById('syncStatus');
+  if (!names.length) { alert('캐릭터 이름을 한 줄에 한 명씩 붙여넣어 주세요.'); return; }
+  if (names.length > 50) { alert('한 번에 최대 50명까지 연동할 수 있어요. 이름을 나눠서 진행해 주세요.'); return; }
+  const button = document.getElementById('syncRoster'); button.disabled = true;
+  let ok=0, failed=[];
+  try {
+    for (let i=0;i<names.length;i++) {
+      status.textContent = `조회 중 ${i+1}/${names.length}: ${names[i]}`;
+      try {
+        const response = await fetch('/api/roster', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:names[i],serverName:'바바룽'})});
+        const result = await response.json();
+        if (!response.ok || !result.ok) { failed.push(names[i] + (result.error ? ` (${result.error})` : '')); continue; }
+        const found = result.character;
+        const old = data.members.find(m=>m.name===found.name);
+        if (old) {
+          old.cls = found.cls || old.cls; old.power = Number(found.power)||old.power; old.level = Number(found.level)||old.level;
+          old.server = found.server || '바바룽'; old.syncedAt = new Date().toISOString();
+        } else {
+          data.members.push({id:id(),name:found.name,cls:found.cls||'기타',power:Number(found.power)||0,rank:'레기온원',note:found.level?`레벨 ${found.level}`:'',server:found.server||'바바룽',level:Number(found.level)||0,syncedAt:new Date().toISOString()});
+        }
+        ok++; save();
+      } catch (err) { failed.push(names[i]); }
+    }
+    status.textContent = `완료: ${ok}명 연동, ${failed.length}명 확인 필요.` + (failed.length ? ` 실패/미확인: ${failed.slice(0,8).join(', ')}${failed.length>8?'…':''}` : '');
+    if (failed.length) alert(`연동 완료 ${ok}명, 미확인 ${failed.length}명입니다.
+미확인 이름은 서버/종족/게임 검색 API 상태를 확인해 주세요.
+${failed.slice(0,12).join(', ')}`);
+  } finally { button.disabled = false; render(); }
+});
+
 render();
 </script></body></html>
